@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"com.zkly/modeldb/sdk/mongo/domain"
+	"e.coding.net/zklytech/serverlesss/mongo-sdk/domain"
 )
 
 const (

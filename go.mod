@@ -1,3 +1,3 @@
-module com.zkly/modeldb/sdk/mongo
+module e.coding.net/zklytech/serverlesss/mongo-sdk
 
 go 1.20
