@@ -36,11 +36,7 @@ func CallSdkService(httpReq *http.Request, req domain.CallSdkReq) (resp domain.C
 	}
 
 	var buff = make([]byte, httpResp.ContentLength)
-	_, err = httpResp.Body.Read(buff)
-
-	if err != nil {
-		return
-	}
+	httpResp.Body.Read(buff)
 
 	err = json.Unmarshal(buff, &resp)
 	return
