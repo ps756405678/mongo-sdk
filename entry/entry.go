@@ -19,7 +19,7 @@ func CallSdkService(httpReq *http.Request, req domain.CallSdkReq) (resp domain.C
 	if err != nil {
 		return
 	}
-	request, err := http.NewRequest("POST", "http://mongo-sdk-service-v1.default.local.com", bytes.NewReader(bData))
+	request, err := http.NewRequest("POST", "http://mongo-sdk-service-v1.default.local.com:8080", bytes.NewReader(bData))
 	if err != nil {
 		return
 	}
