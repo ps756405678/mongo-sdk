@@ -8,4 +8,6 @@ const (
 	Find             = "find"
 	DeleteOne        = "delete_one"
 	DeleteMany       = "delete_many"
+	SaveHook         = "save_hook"
+	DeleteHook       = "delete_hook"
 )
