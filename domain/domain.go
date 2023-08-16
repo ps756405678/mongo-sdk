@@ -6,7 +6,6 @@ import "encoding/json"
 
 // 接口调用的数据结构定义
 type CallSdkReq struct {
-	Method     string `json:"method"`
 	Schema     string `json:"schema"`
 	Collection string `json:"collection"`
 }

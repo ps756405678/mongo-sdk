@@ -13,11 +13,10 @@ func (req *UpdateOneReq[T]) ToJson() []byte {
 }
 
 type UpdateWrapper[T any] struct {
-	Method     string         `json:"method"`
 	Schema     string         `json:"schema"`
 	Collection string         `json:"collection"`
 	Query      map[string]any `json:"query"`
-	UpdateSet  map[string]any `json:"updaet_set"`
+	UpdateSet  map[string]any `json:"update_set"`
 }
 
 func (query *UpdateWrapper[T]) ToJson() []byte {

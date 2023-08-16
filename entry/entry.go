@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/ps756405678/mongo-sdk/consts"
 	"github.com/ps756405678/mongo-sdk/domain"
 	"github.com/ps756405678/mongo-sdk/method"
 )
@@ -18,8 +19,7 @@ const (
 )
 
 func CreateCollection(httpReq *http.Request, req domain.CallSdkReq) (entityName string, err error) {
-	req.Method = method.CreateCollection
-	resp, err := callSdkService[string](httpReq, &req)
+	resp, err := callSdkService[string](httpReq, &req, method.CreateCollection)
 	if err != nil {
 		return
 	}
@@ -29,8 +29,7 @@ func CreateCollection(httpReq *http.Request, req domain.CallSdkReq) (entityName 
 }
 
 func FindOne[T any](httpReq *http.Request, query domain.QueryWrapper[T]) (result T, err error) {
-	query.Method = method.FindOne
-	resp, err := callSdkService[T](httpReq, &query)
+	resp, err := callSdkService[T](httpReq, &query, method.FindOne)
 	if err != nil {
 		return
 	}
@@ -40,8 +39,7 @@ func FindOne[T any](httpReq *http.Request, query domain.QueryWrapper[T]) (result
 }
 
 func FindMany[T any](httpReq *http.Request, query domain.QueryWrapper[T]) (result []T, err error) {
-	query.Method = method.Find
-	resp, err := callSdkService[[]T](httpReq, &query)
+	resp, err := callSdkService[[]T](httpReq, &query, method.Find)
 	if err != nil {
 		return
 	}
@@ -51,8 +49,7 @@ func FindMany[T any](httpReq *http.Request, query domain.QueryWrapper[T]) (resul
 }
 
 func InsertOne[T any](httpReq *http.Request, req domain.InsertOneReq[T]) (result string, err error) {
-	req.Req.Method = method.InsertOne
-	resp, err := callSdkService[string](httpReq, &req)
+	resp, err := callSdkService[string](httpReq, &req, method.InsertOne)
 	if err != nil {
 		return
 	}
@@ -62,8 +59,7 @@ func InsertOne[T any](httpReq *http.Request, req domain.InsertOneReq[T]) (result
 }
 
 func InsertMany[T any](httpReq *http.Request, req domain.InsertManyReq[T]) (result []string, err error) {
-	req.Req.Method = method.InsertMany
-	resp, err := callSdkService[[]string](httpReq, &req)
+	resp, err := callSdkService[[]string](httpReq, &req, method.InsertMany)
 	if err != nil {
 		return
 	}
@@ -73,8 +69,7 @@ func InsertMany[T any](httpReq *http.Request, req domain.InsertManyReq[T]) (resu
 }
 
 func UpdateById[T any](httpReq *http.Request, req domain.UpdateOneReq[T]) (result int, err error) {
-	req.Req.Method = method.UpdateById
-	resp, err := callSdkService[int](httpReq, &req)
+	resp, err := callSdkService[int](httpReq, &req, method.UpdateById)
 	if err != nil {
 		return
 	}
@@ -83,8 +78,7 @@ func UpdateById[T any](httpReq *http.Request, req domain.UpdateOneReq[T]) (resul
 }
 
 func UpdateMany[T any](httpReq *http.Request, req domain.UpdateWrapper[T]) (result int, err error) {
-	req.Method = method.UpdateMany
-	resp, err := callSdkService[int](httpReq, &req)
+	resp, err := callSdkService[int](httpReq, &req, method.UpdateMany)
 	if err != nil {
 		return
 	}
@@ -93,8 +87,7 @@ func UpdateMany[T any](httpReq *http.Request, req domain.UpdateWrapper[T]) (resu
 }
 
 func DeleteOne[T any](httpReq *http.Request, query domain.QueryWrapper[T]) (result int, err error) {
-	query.Method = method.DeleteOne
-	resp, err := callSdkService[int](httpReq, &query)
+	resp, err := callSdkService[int](httpReq, &query, method.DeleteOne)
 	if err != nil {
 		return
 	}
@@ -104,8 +97,7 @@ func DeleteOne[T any](httpReq *http.Request, query domain.QueryWrapper[T]) (resu
 }
 
 func DeleteMany[T any](httpReq *http.Request, query domain.QueryWrapper[T]) (result int, err error) {
-	query.Method = method.DeleteMany
-	resp, err := callSdkService[int](httpReq, &query)
+	resp, err := callSdkService[int](httpReq, &query, method.DeleteMany)
 	if err != nil {
 		return
 	}
@@ -115,21 +107,19 @@ func DeleteMany[T any](httpReq *http.Request, query domain.QueryWrapper[T]) (res
 }
 
 func SaveHook(httpReq *http.Request, req domain.SaveHookReq) (err error) {
-	req.Req.Method = method.SaveHook
-	_, err = callSdkService[any](httpReq, &req)
+	_, err = callSdkService[any](httpReq, &req, method.SaveHook)
 
 	return
 }
 
 func DeleteHook(httpReq *http.Request, req domain.DeleteHookReq) (err error) {
-	req.Req.Method = method.SaveHook
-	_, err = callSdkService[any](httpReq, &req)
+	_, err = callSdkService[any](httpReq, &req, method.SaveHook)
 
 	return
 }
 
 // 调用SDK sevice
-func callSdkService[T any](httpReq *http.Request, req domain.SdkServiceReq) (resp domain.CallSdkResp[T], err error) {
+func callSdkService[T any](httpReq *http.Request, req domain.SdkServiceReq, m string) (resp domain.CallSdkResp[T], err error) {
 	// 序列化参数
 	bData := req.ToJson()
 
@@ -144,6 +134,7 @@ func callSdkService[T any](httpReq *http.Request, req domain.SdkServiceReq) (res
 	request.Header.Add(applicationId, httpReq.Header.Get(applicationId))
 	request.Header.Add(modelId, httpReq.Header.Get(modelId))
 	request.Header.Add(instanceId, httpReq.Header.Get(instanceId))
+	request.Header.Add(consts.MethodHeaderKey, m)
 
 	var client = http.Client{}
 
