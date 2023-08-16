@@ -114,6 +114,20 @@ func DeleteMany[T any](httpReq *http.Request, query domain.QueryWrapper[T]) (res
 	return
 }
 
+func SaveHook(httpReq *http.Request, req domain.SaveHookReq) (err error) {
+	req.Req.Method = method.SaveHook
+	_, err = callSdkService[any](httpReq, &req)
+
+	return
+}
+
+func DeleteHook(httpReq *http.Request, req domain.DeleteHookReq) (err error) {
+	req.Req.Method = method.SaveHook
+	_, err = callSdkService[any](httpReq, &req)
+
+	return
+}
+
 // 调用SDK sevice
 func callSdkService[T any](httpReq *http.Request, req domain.SdkServiceReq) (resp domain.CallSdkResp[T], err error) {
 	// 序列化参数

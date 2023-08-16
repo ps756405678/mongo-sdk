@@ -18,7 +18,27 @@ type CallSdkResp[T any] struct {
 	Result     T      `json:"result"`
 }
 
+type SaveHookReq struct {
+	Req  CallSdkReq
+	Data []any `json:"data"`
+}
+
+type DeleteHookReq struct {
+	Req  CallSdkReq
+	Data []string `json:"data"`
+}
+
 func (req *CallSdkReq) ToJson() []byte {
+	bdata, _ := json.Marshal(req)
+	return bdata
+}
+
+func (req *SaveHookReq) ToJson() []byte {
+	bdata, _ := json.Marshal(req)
+	return bdata
+}
+
+func (req *DeleteHookReq) ToJson() []byte {
 	bdata, _ := json.Marshal(req)
 	return bdata
 }
