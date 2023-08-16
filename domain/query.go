@@ -3,6 +3,7 @@ package domain
 import "encoding/json"
 
 type QueryWrapper[T any] struct {
+	Method     string         `json:"method"`
 	Schema     string         `json:"schema"`
 	Collection string         `json:"collection"`
 	Query      map[string]any `json:"query"`
