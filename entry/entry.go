@@ -5,6 +5,7 @@ package entry
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"net/http"
 
 	"github.com/ps756405678/mongo-sdk/consts"
@@ -148,5 +149,12 @@ func callSdkService[T any](httpReq *http.Request, req domain.SdkServiceReq, m st
 
 	// 反序列化结果
 	err = json.Unmarshal(buff, &resp)
+	if err != nil {
+		return
+	}
+
+	if resp.ErrCode != consts.Success {
+		err = errors.New(resp.ErrMessage)
+	}
 	return
 }
