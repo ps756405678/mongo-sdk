@@ -3,7 +3,7 @@ package domain
 import "encoding/json"
 
 type UpdateOneReq[T any] struct {
-	Req  CallSdkReq
+	CallSdkReq
 	Data T `json:"data"`
 }
 

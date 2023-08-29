@@ -3,12 +3,12 @@ package domain
 import "encoding/json"
 
 type InsertOneReq[T any] struct {
-	Req  CallSdkReq
+	CallSdkReq
 	Data T `json:"data"`
 }
 
 type InsertManyReq[T any] struct {
-	Req  CallSdkReq
+	CallSdkReq
 	Data []T `json:"data"`
 }
 
