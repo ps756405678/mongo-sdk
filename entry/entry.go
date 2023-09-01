@@ -97,7 +97,7 @@ func DeleteOne[T any](httpReq *http.Request, query domain.QueryWrapper[T]) (resu
 	return
 }
 
-func DeleteMany[T any](httpReq *http.Request, query domain.QueryWrapper[T]) (result int, err error) {
+func DeleteMany[T any](httpReq *http.Request, query domain.DeleteWrapper) (result int, err error) {
 	resp, err := callSdkService[int](httpReq, &query, method.DeleteMany)
 	if err != nil {
 		return
