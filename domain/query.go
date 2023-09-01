@@ -17,6 +17,7 @@ func NewQueryWrapper[T any](schema string, collection string) QueryWrapper[T] {
 	return QueryWrapper[T]{
 		Schema:     schema,
 		Collection: collection,
+		Query:      map[string]any{},
 	}
 }
 
