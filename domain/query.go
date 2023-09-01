@@ -66,7 +66,6 @@ func (query *QueryWrapper[T]) Expr(fieldName string, value string) *QueryWrapper
 }
 
 func (query *QueryWrapper[T]) Or(value map[string]any) *QueryWrapper[T] {
-	query.Query["$or"] = value
 	if _, ok := query.Query["$or"]; !ok {
 		query.Query["$or"] = []map[string]any{}
 	}
