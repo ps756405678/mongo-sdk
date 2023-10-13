@@ -19,12 +19,12 @@ const (
 	instanceId    = "Instance-Id"
 )
 
-func CreateCollection(httpReq *http.Request, req domain.CallSdkReq) (entityName string, err error) {
-	resp, err := callSdkService[string](httpReq, &req, method.CreateCollection)
+func CreateCollection(httpReq *http.Request, req domain.CallSdkReq) (result domain.CreateCollectionResp, err error) {
+	resp, err := callSdkService[domain.CreateCollectionResp](httpReq, &req, method.CreateCollection)
 	if err != nil {
 		return
 	}
-	entityName = resp.Result
+	result = resp.Result
 
 	return
 }

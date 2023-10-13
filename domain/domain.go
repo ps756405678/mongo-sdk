@@ -17,6 +17,11 @@ type CallSdkResp[T any] struct {
 	Result     T      `json:"result"`
 }
 
+type CreateCollectionResp struct {
+	CollectionName string `json:"collection_name"`
+	ConnectStr     string `json:"connect_str"`
+}
+
 type SaveHookReq struct {
 	Req  CallSdkReq
 	Data []any `json:"data"`
