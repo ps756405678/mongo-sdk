@@ -3,9 +3,10 @@ package domain
 import "encoding/json"
 
 type QueryWrapper[T any] struct {
-	Schema     string         `json:"schema"`
-	Collection string         `json:"collection"`
-	Query      map[string]any `json:"query"`
+	Schema      string         `json:"schema"`
+	Collection  string         `json:"collection"`
+	Query       map[string]any `json:"query"`
+	SelectField []any          `json:"select"`
 }
 
 func (query *QueryWrapper[T]) ToJson() []byte {
@@ -70,5 +71,10 @@ func (query *QueryWrapper[T]) Or(value map[string]any) *QueryWrapper[T] {
 		query.Query["$or"] = []map[string]any{}
 	}
 	query.Query["$or"] = append(query.Query["$or"].([]map[string]any), value)
+	return query
+}
+
+func (query *QueryWrapper[T]) Select(value []any) *QueryWrapper[T] {
+	query.SelectField = value
 	return query
 }
