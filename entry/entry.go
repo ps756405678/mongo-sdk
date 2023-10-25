@@ -17,6 +17,8 @@ const (
 	applicationId = "Application-Id"
 	modelId       = "Model-Id"
 	instanceId    = "Instance-Id"
+	bizInstanceId = "Biz-Instance-Id"
+	collectionId  = "Collection-Id"
 )
 
 func CreateCollection(httpReq *http.Request, req domain.CallSdkReq) (result domain.CreateCollectionResp, err error) {
@@ -97,7 +99,7 @@ func DeleteOne[T any](httpReq *http.Request, query domain.QueryWrapper[T]) (resu
 	return
 }
 
-func DeleteMany[T any](httpReq *http.Request, query domain.DeleteWrapper) (result int, err error) {
+func DeleteMany[T any](httpReq *http.Request, query domain.QueryWrapper[T]) (result int, err error) {
 	resp, err := callSdkService[int](httpReq, &query, method.DeleteMany)
 	if err != nil {
 		return
@@ -135,6 +137,8 @@ func callSdkService[T any](httpReq *http.Request, req domain.SdkServiceReq, m st
 	request.Header.Add(applicationId, httpReq.Header.Get(applicationId))
 	request.Header.Add(modelId, httpReq.Header.Get(modelId))
 	request.Header.Add(instanceId, httpReq.Header.Get(instanceId))
+	request.Header.Add(bizInstanceId, httpReq.Header.Get(bizInstanceId))
+	request.Header.Add(collectionId, httpReq.Header.Get(collectionId))
 	request.Header.Add(consts.MethodHeaderKey, m)
 
 	var client = http.Client{}
