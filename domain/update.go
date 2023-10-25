@@ -29,7 +29,9 @@ func NewUpdateWrapper[T any](schema string, collection string) UpdateWrapper[T] 
 		Schema:     schema,
 		Collection: collection,
 		Query:      map[string]any{},
-		UpdateSet:  map[string]any{},
+		UpdateSet: map[string]any{
+			"$mul": map[string]any{},
+		},
 	}
 }
 
@@ -86,10 +88,6 @@ func (query *UpdateWrapper[T]) Or(value map[string]any) *UpdateWrapper[T] {
 }
 
 func (query *UpdateWrapper[T]) Set(fieldName string, value any) *UpdateWrapper[T] {
-	query.UpdateSet[fieldName] = map[string]any{
-		"$mul": map[string]any{
-			fieldName: value,
-		},
-	}
+	query.UpdateSet["$mul"].(map[string]any)[fieldName] = value
 	return query
 }
