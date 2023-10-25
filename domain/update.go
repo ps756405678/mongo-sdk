@@ -28,6 +28,8 @@ func NewUpdateWrapper[T any](schema string, collection string) UpdateWrapper[T] 
 	return UpdateWrapper[T]{
 		Schema:     schema,
 		Collection: collection,
+		Query:      map[string]any{},
+		UpdateSet:  map[string]any{},
 	}
 }
 
