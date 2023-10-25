@@ -75,6 +75,14 @@ func (query *UpdateWrapper[T]) Expr(fieldName string, value string) *UpdateWrapp
 	return query
 }
 
+func (query *UpdateWrapper[T]) Or(value map[string]any) *UpdateWrapper[T] {
+	if _, ok := query.Query["$or"]; !ok {
+		query.Query["$or"] = []map[string]any{}
+	}
+	query.Query["$or"] = append(query.Query["$or"].([]map[string]any), value)
+	return query
+}
+
 func (query *UpdateWrapper[T]) Set(fieldName string, value any) *UpdateWrapper[T] {
 	query.UpdateSet[fieldName] = map[string]any{
 		"$mul": map[string]any{
