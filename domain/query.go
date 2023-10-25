@@ -3,12 +3,17 @@ package domain
 import "encoding/json"
 
 type QueryWrapper[T any] struct {
-	Schema      string           `json:"schema"`
-	Collection  string           `json:"collection"`
-	Query       map[string]any   `json:"query"`
-	SelectField []any            `json:"select"`
-	LimitCount  int64            `json:"limit"`
-	SortList    []map[string]int `json:"sort"`
+	Schema      string         `json:"schema"`
+	Collection  string         `json:"collection"`
+	Query       map[string]any `json:"query"`
+	SelectField []any          `json:"select"`
+	LimitCount  int64          `json:"limit"`
+	SortList    []SortRule     `json:"sort"`
+}
+
+type SortRule struct {
+	Field     string `json:"field"`
+	AscOrDesc int    `json:"asc_or_desc"`
 }
 
 func (query *QueryWrapper[T]) ToJson() []byte {
@@ -87,6 +92,9 @@ func (query *QueryWrapper[T]) Limit(count int64) *QueryWrapper[T] {
 }
 
 func (query *QueryWrapper[T]) Sort(field string, ascOrDesc int) *QueryWrapper[T] {
-	query.SortList = append(query.SortList, map[string]int{field: ascOrDesc})
+	query.SortList = append(query.SortList, SortRule{
+		Field:     field,
+		AscOrDesc: ascOrDesc,
+	})
 	return query
 }
