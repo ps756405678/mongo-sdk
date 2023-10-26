@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"io"
 	"net/http"
 
 	"github.com/ps756405678/mongo-sdk/consts"
@@ -148,8 +149,7 @@ func callSdkService[T any](httpReq *http.Request, req domain.SdkServiceReq, m st
 		return
 	}
 
-	var buff = make([]byte, httpResp.ContentLength)
-	httpResp.Body.Read(buff)
+	buff, _ := io.ReadAll(httpResp.Body)
 
 	// 反序列化结果
 	err = json.Unmarshal(buff, &resp)
