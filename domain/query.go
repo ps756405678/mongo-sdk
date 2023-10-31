@@ -8,6 +8,7 @@ type QueryWrapper[T any] struct {
 	Query       map[string]any `json:"query"`
 	SelectField []any          `json:"select"`
 	LimitCount  int64          `json:"limit"`
+	OffsetCount int64          `json:"offset"`
 	SortList    []SortRule     `json:"sort"`
 }
 
@@ -83,6 +84,11 @@ func (query *QueryWrapper[T]) Or(value map[string]any) *QueryWrapper[T] {
 
 func (query *QueryWrapper[T]) Select(value []any) *QueryWrapper[T] {
 	query.SelectField = value
+	return query
+}
+
+func (query *QueryWrapper[T]) Offset(count int64) *QueryWrapper[T] {
+	query.OffsetCount = count
 	return query
 }
 
