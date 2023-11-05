@@ -52,8 +52,8 @@ func FindMany[T any](httpReq *http.Request, query domain.QueryWrapper[T]) (resul
 	return
 }
 
-func Count(httpReq *http.Request, query domain.QueryWrapper[int]) (result int, err error) {
-	resp, err := callSdkService[int](httpReq, &query, method.Count)
+func Count(httpReq *http.Request, query domain.QueryWrapper[int64]) (result int64, err error) {
+	resp, err := callSdkService[int64](httpReq, &query, method.Count)
 	if err != nil {
 		return
 	}
