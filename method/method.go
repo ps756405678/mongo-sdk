@@ -12,4 +12,5 @@ const (
 	DeleteMany       = "delete_many"
 	SaveHook         = "save_hook"
 	DeleteHook       = "delete_hook"
+	Count            = "count"
 )

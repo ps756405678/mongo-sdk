@@ -42,13 +42,23 @@ func FindOne[T any](httpReq *http.Request, query domain.QueryWrapper[T]) (result
 	return
 }
 
-func FindMany[T any](httpReq *http.Request, query domain.QueryWrapper[T]) (result []T, err error) {
-	resp, err := callSdkService[[]T](httpReq, &query, method.Find)
+func FindMany[T any](httpReq *http.Request, query domain.QueryWrapper[T]) (result domain.QueryResult[T], err error) {
+	resp, err := callSdkService[domain.QueryResult[T]](httpReq, &query, method.Find)
 	if err != nil {
 		return
 	}
 	result = resp.Result
 
+	return
+}
+
+func Count(httpReq *http.Request, query domain.QueryWrapper[int]) (result int, err error) {
+	resp, err := callSdkService[int](httpReq, &query, method.Count)
+	if err != nil {
+		return
+	}
+
+	result = resp.Result
 	return
 }
 

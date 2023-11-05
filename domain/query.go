@@ -17,6 +17,11 @@ type SortRule struct {
 	AscOrDesc int    `json:"asc_or_desc"`
 }
 
+type QueryResult[T any] struct {
+	List  []T   `json:"list"`
+	Total int64 `json:"total"`
+}
+
 func (query *QueryWrapper[T]) ToJson() []byte {
 	bdata, _ := json.Marshal(query)
 	return bdata
